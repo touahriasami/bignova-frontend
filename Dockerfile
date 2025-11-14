@@ -11,4 +11,3 @@ RUN npm ci
 COPY . .
 # Angular 20 app with default prod build
 CMD ["npx", "ng", "serve", "--host", "0.0.0.0"]
-
