@@ -22,6 +22,7 @@ export class Company implements OnInit {
   submitted = false;
   successMessage = '';
   companyForm = new FormGroup({
+    logo: new FormControl(''),
     name: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     phone: new FormControl('', [Validators.required]),

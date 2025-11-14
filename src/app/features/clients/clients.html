@@ -17,7 +17,12 @@
           <path d="m21 21-4.3-4.3"></path>
         </g>
       </svg>
-      <input type="search" class="grow" placeholder="Search" />
+      <input
+        type="search"
+        class="grow"
+        placeholder="search by name/email/phone"
+        (input)="onSearch($event)"
+      />
     </label>
     <button class="btn btn-primary" onclick="addClient.show()">
       add client
@@ -37,7 +42,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let client of clients$ | async">
+        <tr *ngFor="let client of filteredClients$ | async">
           <!-- <th>{{client._id}}</th> -->
           <td>{{client.name}}</td>
           <td>{{client.email}}</td>
