@@ -1,0 +1,60 @@
+<div class="modal-box max-w-5xl min-w-lg">
+  <div class="space-y-4">
+    <h1>Update Client</h1>
+    <form [formGroup]="updateClientForm" class="space-y-4">
+      <div class="flex gap-4">
+        <div class="space-y-4">
+          <label class="input input-bordered flex items-center gap-2">
+            <input
+              formControlName="name"
+              type="text"
+              class="grow"
+              placeholder="Name"
+            />
+          </label>
+          <label class="input input-bordered flex items-center gap-2">
+            <input
+              formControlName="email"
+              type="text"
+              class="grow"
+              placeholder="Email"
+            />
+          </label>
+        </div>
+        <div class="space-y-4">
+          <label class="input input-bordered flex items-center gap-2">
+            <input
+              formControlName="phone"
+              type="text"
+              class="grow"
+              placeholder="Phone"
+            />
+          </label>
+          <label class="input input-bordered flex items-center gap-2">
+            <input
+              formControlName="address"
+              type="text"
+              class="grow"
+              placeholder="Address"
+            />
+          </label>
+        </div>
+      </div>
+    </form>
+    <div class="text-emerald-600" *ngIf="successMessage">
+      {{ successMessage }}
+    </div>
+  </div>
+
+  <div class="modal-action">
+    <button
+      (click)="save()"
+      [disabled]="loading || updateClientForm.invalid"
+      class="btn btn-sm bg-emerald-500"
+    >
+      <span class="loading loading-dots loading-sm" *ngIf="loading"></span>
+      <span *ngIf="!loading">Save</span>
+    </button>
+    <button onclick="updateClient.close()" class="btn btn-sm">Close</button>
+  </div>
+</div>

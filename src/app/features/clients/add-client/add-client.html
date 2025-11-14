@@ -1,0 +1,59 @@
+<div class="modal-box max-w-5xl min-w-lg">
+  <div class="">
+    <form [formGroup]="addClientForm" class="space-y-4">
+      <h1>Add Client</h1>
+      <div class="flex gap-4">
+        <div class="space-y-4">
+          <label class="input input-bordered flex items-center gap-2">
+            <input
+              formControlName="name"
+              type="text"
+              class="grow"
+              placeholder="Name"
+            />
+          </label>
+          <label class="input input-bordered flex items-center gap-2">
+            <input
+              formControlName="email"
+              type="text"
+              class="grow"
+              placeholder="Email"
+            />
+          </label>
+        </div>
+        <div class="space-y-4">
+          <label class="input input-bordered flex items-center gap-2">
+            <input
+              formControlName="phone"
+              type="text"
+              class="grow"
+              placeholder="Phone"
+            />
+          </label>
+          <label class="input input-bordered flex items-center gap-2">
+            <input
+              formControlName="address"
+              type="text"
+              class="grow"
+              placeholder="Adress"
+            />
+          </label>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-action">
+    <button
+      (click)="addClient()"
+      [disabled]="loading"
+      class="btn btn-sm bg-emerald-500"
+    >
+      <span class="loading loading-dots loading-sm" *ngIf="loading"></span>
+      <span *ngIf="!loading">add</span>
+    </button>
+    <!-- <form method="dialog" class="modal-backdrop"> -->
+    <button onclick="addClient.close()" class="btn btn-sm">Close</button>
+    <!-- </form> -->
+  </div>
+</div>

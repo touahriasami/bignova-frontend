@@ -1,0 +1,75 @@
+<form [formGroup]="companyForm" (submit)="onSubmit()" class="space-y-4">
+  <div class="flex items-start gap-x-4">
+    <fieldset
+      class="fieldset space-y-4 bg-base-200 border-base-300 rounded-box w-xs border p-4"
+    >
+      <legend class="fieldset-legend">General Information</legend>
+      <div class="">
+        <label for="company-name">Company name</label>
+        <input
+          type="text"
+          id="company-name"
+          class="input"
+          placeholder="Company Name"
+          formControlName="name"
+        />
+      </div>
+      <div class="">
+        <label for="company-email">Company email</label>
+        <input
+          type="text"
+          id="company-email"
+          class="input"
+          placeholder="Company Email"
+          formControlName="email"
+        />
+      </div>
+      <div class="">
+        <label for="company-phone">Company phone</label>
+        <input
+          type="text"
+          id="company-phone"
+          class="input"
+          placeholder="Company Phone"
+          formControlName="phone"
+        />
+      </div>
+    </fieldset>
+    <fieldset
+      class="fieldset bg-base-200 space-y-4 border-base-300 rounded-box w-xs border p-4"
+    >
+      <legend class="fieldset-legend">Bank Information</legend>
+      <div class="">
+        <label for="raison-sociale">raison sociale</label>
+        <input
+          type="text"
+          id="raison-sociale"
+          class="input"
+          placeholder="Raison Sociale"
+          formControlName="raisonSociale"
+        />
+      </div>
+      <div class="">
+        <label for="iban">IBAN</label>
+        <input
+          type="text"
+          id="iban"
+          class="input"
+          placeholder="IBAN"
+          formControlName="iban"
+        />
+      </div>
+      <div class="">
+        <label for="currency">currency</label>
+        <select class="select" id="currency" formControlName="currency">
+          <ng-template ngFor let-item [ngForOf]="currencies" let-i="index">
+            <option [value]="item">{{ item }}</option>
+          </ng-template>
+        </select>
+      </div>
+    </fieldset>
+  </div>
+  <div class="">
+    <button type="submit" class="btn btn-info">Save</button>
+  </div>
+</form>

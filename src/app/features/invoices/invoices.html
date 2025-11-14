@@ -1,0 +1,73 @@
+<div class="space-y-10">
+  <div class="overflow-x-auto">
+    <table class="table table-xs">
+      <thead>
+        <tr>
+          <!-- <th></th> -->
+          <th>N° Invoice</th>
+          <th>Client</th>
+          <th>Date</th>
+          <th>subTotal</th>
+          <th>Total TVA</th>
+          <th>Total TTC</th>
+          <th>Status</th>
+          <th>actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let invoice of invoices$ | async">
+          <!-- <th>{{invoice._id}}</th> -->
+          <td>{{invoice.invoiceNumber}}</td>
+          <td>{{invoice.clientId.name}}</td>
+          <td>{{invoice.paidDate | date: 'mediumDate'}}</td>
+          <td>{{invoice.subTotalHT}}{{invoice.currency}}</td>
+          <td>{{invoice.tvaTotal}}{{invoice.currency}}</td>
+          <td>{{invoice.totalTTC}}{{invoice.currency}}</td>
+          <td>
+            <div class="badge badge-soft badge-secondary">
+              {{invoice.status}}
+            </div>
+          </td>
+          <td class="space-x-2">
+            <button
+              class="btn btn-sm btn-info"
+              (click)="markAsPaid(invoice._id)"
+              [disabled]="invoice.status === 'PAID'"
+            >
+              <span
+                class="loading loading-dots loading-sm"
+                *ngIf="(invoice._id == payeInvoiceId) && loading; else notPaid"
+              ></span>
+              <ng-template #notPaid>Mark as Paid</ng-template>
+            </button>
+            <button
+              class="btn btn-sm btn-info"
+              (click)="showInvoice(invoice._id)"
+            >
+              show
+            </button>
+
+            <button
+              class="btn btn-sm btn-error"
+              (click)="deleteInvoice(invoice._id)"
+            >
+              <span
+                class="loading loading-dots loading-sm"
+                *ngIf="(invoice._id == deleteInvoiceId) && loading; else notDeleted"
+              ></span>
+              <ng-template #notDeleted>Delete</ng-template>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<dialog id="markAsPaid" class="modal">
+  <app-mark-as-paid [invoiceId]="payeInvoiceId" />
+</dialog>
+
+<dialog id="viewInvoice" class="modal">
+  <app-show-invoice [invoiceId]="selectedInvoice" />
+</dialog>

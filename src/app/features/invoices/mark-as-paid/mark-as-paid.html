@@ -1,0 +1,33 @@
+<div class="modal-box max-w-5xl min-w-md">
+  <div class="">
+    <form [formGroup]="markAsPaidForm" class="space-y-4">
+      <h1>Paye invoice</h1>
+      <div class="flex gap-4">
+        <div class="space-y-4">
+          <label class="input input-bordered flex items-center gap-2">
+            <input
+              formControlName="selectedDate"
+              type="date"
+              class="grow"
+              placeholder="Name"
+            />
+          </label>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-action">
+    <button
+      (click)="markAsPaid()"
+      [disabled]="loading"
+      class="btn btn-sm bg-emerald-500"
+    >
+      <span class="loading loading-dots loading-sm" *ngIf="loading"></span>
+      <span *ngIf="!loading">Mark as Paid</span>
+    </button>
+    <!-- <form method="dialog" class="modal-backdrop"> -->
+    <button onclick="markAsPaid.close()" class="btn btn-sm">Close</button>
+    <!-- </form> -->
+  </div>
+</div>

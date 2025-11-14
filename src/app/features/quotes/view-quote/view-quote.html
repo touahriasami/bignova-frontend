@@ -1,0 +1,70 @@
+<div class="modal-box max-w-5xl min-w-2xl">
+  <div class="space-y-4" *ngIf="quote$ | async as quote; else loadingTpl">
+    <h2 class="text-xl font-semibold">Quote {{ quote.quoteNumber }}</h2>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <div>
+          <span class="font-medium">Client:</span> {{ quote.clientId.name }}
+        </div>
+        <div><span class="font-medium">Status:</span> {{ quote.status }}</div>
+        <div>
+          <span class="font-medium">Date:</span> {{ quote.createdAt | date:
+          'mediumDate' }}
+        </div>
+      </div>
+      <div>
+        <div>
+          <span class="font-medium">Subtotal (HT):</span> {{ quote.subTotalHT }}
+          {{ quote.currency }}
+        </div>
+        <div>
+          <span class="font-medium">TVA Total:</span> {{ quote.tvaTotal }} {{
+          quote.currency }}
+        </div>
+        <div>
+          <span class="font-medium">Total (TTC):</span> {{ quote.totalTTC }} {{
+          quote.currency }}
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <h3 class="font-semibold mb-2">Items</h3>
+      <div class="overflow-x-auto">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Qty</th>
+              <th>Unit Price</th>
+              <th>TVA %</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of quote.items">
+              <td>{{ item.description }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.unitPriceHT }}</td>
+              <td>{{ item.tvaRate }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="modal-action">
+      <button onclick="viewQuote.close()" class="btn btn-sm">Close</button>
+    </div>
+  </div>
+
+  <ng-template #loadingTpl>
+    <div class="flex items-center gap-2">
+      <span class="loading loading-dots loading-sm"></span>
+      <span>Loading quote...</span>
+    </div>
+    <div class="modal-action">
+      <button onclick="viewQuote.close()" class="btn btn-sm">Close</button>
+    </div>
+  </ng-template>
+</div>

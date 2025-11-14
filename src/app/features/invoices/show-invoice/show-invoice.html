@@ -1,0 +1,70 @@
+<div class="modal-box max-w-5xl min-w-2xl">
+  <div class="space-y-4" *ngIf="invoice$ | async as invoice; else loadingTpl">
+    <h2 class="text-xl font-semibold">Invoice {{ invoice.invoiceNumber }}</h2>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <div>
+          <span class="font-medium">Client:</span> {{ invoice.clientId.name }}
+        </div>
+        <div><span class="font-medium">Status:</span> {{ invoice.status }}</div>
+        <div>
+          <span class="font-medium">Paid Date:</span> {{ invoice.paidDate |
+          date: 'mediumDate' }}
+        </div>
+      </div>
+      <div>
+        <div>
+          <span class="font-medium">Subtotal (HT):</span> {{ invoice.subTotalHT
+          }} {{ invoice.currency }}
+        </div>
+        <div>
+          <span class="font-medium">TVA Total:</span> {{ invoice.tvaTotal }} {{
+          invoice.currency }}
+        </div>
+        <div>
+          <span class="font-medium">Total (TTC):</span> {{ invoice.totalTTC }}
+          {{ invoice.currency }}
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <h3 class="font-semibold mb-2">Items</h3>
+      <div class="overflow-x-auto">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Qty</th>
+              <th>Unit Price</th>
+              <th>TVA %</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of invoice.items">
+              <td>{{ item.description }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.unitPriceHT }}</td>
+              <td>{{ item.tvaRate }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="modal-action">
+      <button onclick="viewInvoice.close()" class="btn btn-sm">Close</button>
+    </div>
+  </div>
+
+  <ng-template #loadingTpl>
+    <div class="flex items-center gap-2">
+      <span class="loading loading-dots loading-sm"></span>
+      <span>Loading invoice...</span>
+    </div>
+    <div class="modal-action">
+      <button onclick="viewInvoice.close()" class="btn btn-sm">Close</button>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,100 @@
+<div class="modal-box max-w-5xl min-w-lg">
+  <div class="">
+    <form [formGroup]="addQuoteForm" class="space-y-4">
+      <h1>Add Quote</h1>
+      <div class="flex gap-4">
+        <div class="space-y-4">
+          <div class="space-x-2">
+            <label for="client">client</label>
+            <select class="select" id="client" formControlName="clientId">
+              <option value="" disabled>Select a client</option>
+              <ng-container *ngIf="clients$ | async as clients">
+                <option *ngFor="let client of clients" [value]="client._id">
+                  {{ client.name }}
+                </option>
+              </ng-container>
+            </select>
+          </div>
+
+          <!-- Items section -->
+          <div class="space-y-2" formArrayName="items">
+            <div
+              *ngFor="let item of items().controls; let i = index"
+              [formGroupName]="i"
+              class="grid grid-cols-12 gap-2 items-end"
+            >
+              <div class="col-span-5">
+                <label>Description</label>
+                <input
+                  class="input input-bordered w-full"
+                  type="text"
+                  formControlName="description"
+                  placeholder="Item description"
+                />
+              </div>
+              <div class="col-span-2">
+                <label>Qty</label>
+                <input
+                  class="input input-bordered w-full"
+                  type="number"
+                  formControlName="quantity"
+                  min="1"
+                />
+              </div>
+              <div class="col-span-3">
+                <label>Unit Price</label>
+                <input
+                  class="input input-bordered w-full"
+                  type="number"
+                  formControlName="unitPriceHT"
+                  min="0"
+                  step="0.01"
+                />
+              </div>
+              <div class="col-span-2">
+                <label>TVA %</label>
+                <input
+                  class="input input-bordered w-full"
+                  type="number"
+                  formControlName="tvaRate"
+                  min="0"
+                  max="100"
+                  step="0.01"
+                />
+              </div>
+              <div class="col-span-12 flex justify-end">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-error"
+                  (click)="removeItem(i)"
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="btn btn-sm btn-primary"
+              (click)="addItem()"
+            >
+              + Add Item
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-action">
+    <button
+      (click)="addQuote()"
+      [disabled]="loading || addQuoteForm.invalid"
+      class="btn btn-sm bg-emerald-500"
+    >
+      <span class="loading loading-dots loading-sm" *ngIf="loading"></span>
+      <span *ngIf="!loading">add</span>
+    </button>
+    <button onclick="addQuote.close()" class="btn btn-sm">Close</button>
+  </div>
+</div>

@@ -1,0 +1,92 @@
+<div class="space-y-10">
+  <div class="flex items-center justify-end gap-x-4">
+    <button class="btn btn-primary" onclick="addQuote.show()">add Quote</button>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="table table-xs">
+      <thead>
+        <tr>
+          <!-- <th></th> -->
+          <th>N° Quote</th>
+          <th>Client</th>
+          <th>Date</th>
+          <th>subTotal</th>
+          <th>Total TVA</th>
+          <th>Total TTC</th>
+          <th>Status</th>
+          <th>actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let quote of quotes$ | async">
+          <!-- <th>{{quote._id}}</th> -->
+          <td>{{quote.quoteNumber}}</td>
+          <td>{{quote.clientId.name}}</td>
+          <td>{{quote.createdAt | date: 'mediumDate'}}</td>
+          <td>{{quote.subTotalHT}}{{quote.currency}}</td>
+          <td>{{quote.tvaTotal}}{{quote.currency}}</td>
+          <td>{{quote.totalTTC}}{{quote.currency}}</td>
+          <td>
+            <div class="badge badge-soft badge-secondary">{{quote.status}}</div>
+          </td>
+          <td class="space-x-2">
+            <button
+              class="btn btn-sm btn-primary"
+              (click)="sendQuote(quote._id)"
+              *ngIf="quote.status == 'DRAFT'"
+            >
+              <span
+                class="loading loading-dots loading-sm"
+                *ngIf="(quote._id == sendQuoteId) && loading; else notSent"
+              ></span>
+              <ng-template #notSent>Send</ng-template>
+            </button>
+            <button
+              class="btn btn-sm btn-primary"
+              (click)="acceptQuote(quote._id)"
+              *ngIf="quote.status == 'SENT'"
+            >
+              <span
+                class="loading loading-dots loading-sm"
+                *ngIf="(quote._id == acceptQuoteId) && loading; else notAccepted"
+              ></span>
+              <ng-template #notAccepted>Accept</ng-template>
+            </button>
+            <button
+              class="btn btn-sm btn-primary"
+              (click)="convertToInvoice(quote._id)"
+              *ngIf="quote.status == 'ACCEPTED'"
+            >
+              <span
+                class="loading loading-dots loading-sm"
+                *ngIf="(quote._id == convertQuoteId) && loading; else notConverted"
+              ></span>
+              <ng-template #notConverted>Convert To Invoice</ng-template>
+            </button>
+            <button class="btn btn-sm btn-info" (click)="showQuote(quote._id)">
+              show
+            </button>
+            <button
+              class="btn btn-sm btn-error"
+              (click)="deleteQuote(quote._id!)"
+            >
+              <span
+                class="loading loading-dots loading-sm"
+                *ngIf="(quote._id == deleteQuoteId) && loading; else notDeleted"
+              ></span>
+              <ng-template #notDeleted>Delete</ng-template>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<dialog id="addQuote" class="modal">
+  <app-add-quote [clients$]="clients$" />
+</dialog>
+
+<dialog id="viewQuote" class="modal">
+  <app-view-quote [quoteId]="selectedQuoteId" />
+</dialog>
