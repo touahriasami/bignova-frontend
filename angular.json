@@ -55,6 +55,13 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "allowedHosts": [
+              "localhost",
+              "bignova.smartstack-solutions.com",
+              "host.docker.internal"
+            ]
+          },
           "configurations": {
             "production": {
               "buildTarget": "frontend:build:production"
